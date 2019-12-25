@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <alphabank>
+                <model>AlphabankPaymentGatewayAdapter</model>
+                <active>0</active>
+                <debug>1</debug>
+                <mode>sandbox</mode>
+                <api_url>https://alpha.modirum.com/vpos/shophandlermpi</api_url>
+                <api_url_sandbox>https://alpha.test.modirum.com/vpos/shophandlermpi</api_url_sandbox>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <transaction_type>1</transaction_type>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_refund>0</can_refund>
+                <can_void>0</can_void>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+            </alphabank>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="alphabank" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Alphabank</label>
+
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="sandbox_mode" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sandbox Mode</label>
+                    <source_model>Monogo\Alphabank\Model\Config\Source\Mode</source_model>
+                </field>
+
+                <field id="api_url" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Url</label>
+                </field>
+
+                <field id="api_url_sandbox" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Sandbox Url</label>
+                </field>
+
+                <field id="merchant_id" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Merchant ID</label>
+                </field>
+
+                <field id="secret_key" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Secret Key</label>
+                    <source_model>Magento\Config\Model\Config\Backend\Encrypted</source_model>
+                </field>
+
+                <field id="transaction_type" translate="label" sortOrder="60" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Transaction type</label>
+                    <source_model>Monogo\Alphabank\Model\Config\Source\TransactionType</source_model>
+                </field>
+
+                <field id="order_status" translate="label" sortOrder="70" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>New order status</label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+                </field>
+
+                <field id="cctypes" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Credit Card Types</label>
+                    <source_model>Monogo\Alphabank\Model\Config\Source\Cctype</source_model>
+                </field>
+
+                <field id="debug" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
