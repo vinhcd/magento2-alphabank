@@ -2,13 +2,20 @@
 
 namespace Monogo\Alphabank\Model\Config\Source;
 
-class Cctype extends \Magento\Payment\Model\Source\Cctype
+class Cctype implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getAllowedTypes()
+    public function toOptionArray()
     {
-        return ['AE', 'VI', 'MC', 'JCB', 'DN'];
+        return [
+            ['value' => 'visa', 'label' => __('Visa')],
+            ['value' => 'mastercard', 'label' => __('Mastercard')],
+            ['value' => 'auto:MasterPass', 'label' => __('MasterPass')],
+            ['value' => 'maestro', 'label' => __('Maestro')],
+            ['value' => 'amex', 'label' => __('American Express')],
+            ['value' => 'diners', 'label' => __('Diners')]
+        ];
     }
 }

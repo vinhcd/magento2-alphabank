@@ -1,0 +1,15 @@
+<fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'payment_form_' + getCode()}">
+    <legend class="legend">
+        <span><!-- ko i18n: 'Credit Card Type'--><!-- /ko --></span>
+    </legend>
+    <br/>
+    <div class="field type">
+        <div class="control">
+            <select name="paymethod" class="select"
+                    data-bind="options: getCartTypes(),
+                               optionsValue: 'value',
+                               optionsText: 'text'">
+            </select>
+        </div>
+    </div>
+</fieldset>

@@ -30,7 +30,7 @@
 
                 <field id="secret_key" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Secret Key</label>
-                    <source_model>Magento\Config\Model\Config\Backend\Encrypted</source_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
 
                 <field id="transaction_type" translate="label" sortOrder="60" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
@@ -38,9 +38,9 @@
                     <source_model>Monogo\Alphabank\Model\Config\Source\TransactionType</source_model>
                 </field>
 
-                <field id="order_status" translate="label" sortOrder="70" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>New order status</label>
-                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\Processing</source_model>
+                <field id="order_status" translate="label" sortOrder="65" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Order status</label>
+                    <source_model>Monogo\Alphabank\Model\Config\Source\NewOrderStatus</source_model>
                 </field>
 
                 <field id="cctypes" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">

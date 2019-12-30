@@ -1,19 +1,51 @@
 <?php
 
-namespace Monogo\Alphabank\Gateway\Request;
+namespace Monogo\Alphabank\Model;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\UrlInterface;
 use Magento\Payment\Gateway\ConfigInterface;
-use Magento\Payment\Gateway\Data\OrderAdapterInterface;
+use Magento\Sales\Model\Order;
 
-class RequestBuilder extends DataObject
+class AlphabankAdapter extends DataObject
 {
-    const TXN_TYPE = 1; // 1 = sale, 2 = authorization
+    const CONFIG_TRANS_TYPE = 'transaction_type';
 
     const CONFIG_MERCHANT_ID = 'merchant_id';
 
     const CONFIG_SECRET = 'secret_key';
+
+    const CONFIG_NEW_ORDER_STATUS = 'order_status';
+
+    const PARAM_MID = 'mid';
+
+    const PARAM_ORDER_ID = 'orderid';
+
+    const PARAM_STATUS = 'status';
+
+    const PARAM_TXID = 'txId';
+
+    const PARAM_METHOD = 'payMethod';
+
+    const PARAM_REF = 'paymentRef';
+
+    const PARAM_RISK_SCORE = 'riskScore';
+
+    const PARAM_MESSAGE = 'message';
+
+    const PARAM_CURRENCY = 'currency';
+
+    const STATUS_AUTHORIZED = 'AUTHORIZED';
+
+    const STATUS_CAPTURED = 'CAPTURED';
+
+    const STATUS_CANCELED = 'CANCELED';
+
+    const STATUS_REFUSED = 'REFUSED';
+
+    const STATUS_ERROR = 'ERROR';
+
+    const STATUS_FRAUD = 'FRAUD';
 
     /**
      * @var ConfigInterface
@@ -39,35 +71,27 @@ class RequestBuilder extends DataObject
     }
 
     /**
-     * @param OrderAdapterInterface $order
+     * @param Order $order
      * @return array
      */
-    protected function buildRequest($order)
+    public function buildRequest($order)
     {
         $form_data_array = array();
         $fieldsArr = array();
 
         $shippingAddress = $order->getShippingAddress();
         $shippingStreet = '';
-        if (!empty($shippingAddress->getStreetLine1()) && !empty($shippingAddress->getStreetLine2())) {
-            $shippingStreet = $shippingAddress->getStreetLine1() . ', ' . $shippingAddress->getStreetLine2();
-        } else if (!empty($shippingAddress->getStreetLine1())) {
-            $shippingStreet = $shippingAddress->getStreetLine1();
-        } else if (!empty($shippingAddress->getStreetLine2())) {
-            $shippingStreet = $shippingAddress->getStreetLine2();
+        if (!empty($shippingAddress->getStreet())) {
+            $shippingStreet = implode(', ', $shippingAddress->getStreet());
         }
 
         $billingAddress = $order->getBillingAddress();
         $billingStreet = '';
-        if (!empty($billingAddress->getStreetLine1()) && !empty($billingAddress->getStreetLine2())) {
-            $billingStreet = $billingAddress->getStreetLine1() . ', ' . $billingAddress->getStreetLine2();
-        } else if (!empty($billingAddress->getStreetLine1())) {
-            $billingStreet = $billingAddress->getStreetLine1();
-        } else if (!empty($billingAddress->getStreetLine2())) {
-            $billingStreet = $billingAddress->getStreetLine2();
+        if (!empty($billingAddress->getStreet())) {
+            $billingStreet = implode(', ', $billingAddress->getStreet());
         }
-//        $paymentInfo = $this->getInfoInstance();
-//        $additional_information = $paymentInfo->getAdditionalInformation();
+        $payment = $order->getPayment();
+        $additionalInformation = $payment->getAdditionalInformation();
 
         $fieldsArr['mid']  = $this->getConfig()->getValue(self::CONFIG_MERCHANT_ID);
         $form_data_array[1] = $fieldsArr['mid'] ;                                                   //Req
@@ -79,14 +103,14 @@ class RequestBuilder extends DataObject
         $form_data_array[4] = $fieldsArr['orderid'];                                                //Req
         $fieldsArr['orderDesc'] = 'Order by ' . $billingAddress->getFirstname() . ' ' . $billingAddress->getLastname();
         $form_data_array[5] = $fieldsArr['orderDesc'];                                              //Opt
-        $fieldsArr['orderAmount'] = $order->getGrandTotalAmount();
+        $fieldsArr['orderAmount'] = $order->getGrandTotal();
         $form_data_array[6] = $fieldsArr['orderAmount'];                                            //Req
-        $fieldsArr['currency'] = $order->getCurrencyCode();
+        $fieldsArr['currency'] = $order->getOrderCurrencyCode();
         $form_data_array[7] = $fieldsArr['currency'];                                               //Req
         $fieldsArr['payerEmail'] = $billingAddress->getEmail();
         $form_data_array[8] = $fieldsArr['payerEmail'];                                             //Req
         $fieldsArr['payerPhone'] = $billingAddress->getTelephone();
-        $form_data_array[9] = $fieldsArr['payerPhone'];                                             //Opt        
+        $form_data_array[9] = $fieldsArr['payerPhone'];                                             //Opt
         $fieldsArr['billCountry'] = $billingAddress->getCountryId();
         $form_data_array[10] = $fieldsArr['billCountry'];                                           //Opt
         $fieldsArr['billState'] = $billingAddress->getRegionCode();
@@ -118,8 +142,11 @@ class RequestBuilder extends DataObject
         $fieldsArr['reject3dsU'] = '';
         $form_data_array[24] = $fieldsArr['reject3dsU'];                                            //Opt
         $fieldsArr['payMethod'] = '';
+        if (isset($additionalInformation['payMethod'])) {
+            $fieldsArr['payMethod'] = $additionalInformation['payMethod'];
+        }
         $form_data_array[25] = $fieldsArr['payMethod'];                                             //Opt
-        $fieldsArr['trType'] = $this->getTransactionType();
+        $fieldsArr['trType'] = $this->getConfig()->getValue(self::CONFIG_TRANS_TYPE);
         $form_data_array[26] = $fieldsArr['trType'];                                                //Opt
         $fieldsArr['extInstallmentoffset'] = '';
         $form_data_array[27] = $fieldsArr['extInstallmentoffset'];                                  //Opt
@@ -154,25 +181,15 @@ class RequestBuilder extends DataObject
         $digest = base64_encode(sha1($form_data,true));
         $fieldsArr['digest'] = $digest;
 
-//        $this->_debug(['request' => $fieldsArr]);
-
         return $fieldsArr;
     }
 
     /**
      * @return ConfigInterface
      */
-    protected function getConfig()
+    private function getConfig()
     {
         return $this->config;
-    }
-
-    /**
-     * @return int
-     */
-    private function getTransactionType()
-    {
-        return static::TXN_TYPE;
     }
 
     /**
