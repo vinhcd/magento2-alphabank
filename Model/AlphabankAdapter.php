@@ -15,6 +15,8 @@ class AlphabankAdapter extends DataObject
 
     const CONFIG_SECRET = 'secret_key';
 
+    const CONFIG_LANG = 'language';
+
     const CONFIG_NEW_ORDER_STATUS = 'order_status';
 
     const CONFIG_INSTALLMENTS = 'installments';
@@ -99,7 +101,7 @@ class AlphabankAdapter extends DataObject
 
         $fieldsArr['mid']  = $this->getConfig()->getValue(self::CONFIG_MERCHANT_ID);
         $form_data_array[1] = $fieldsArr['mid'] ;                                                   //Req
-        $fieldsArr['lang'] = '';
+        $fieldsArr['lang'] = $this->getConfig()->getValue(self::CONFIG_LANG);
         $form_data_array[2] = $fieldsArr['lang'];                                                   //Opt
         $fieldsArr['deviceCategory'] = "";
         $form_data_array[3] = $fieldsArr['deviceCategory'];                                         //Opt

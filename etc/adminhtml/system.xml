@@ -33,6 +33,11 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
 
+                <field id="language" translate="label" sortOrder="55" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Gateway language</label>
+                    <source_model>Monogo\Alphabank\Model\Config\Source\Language</source_model>
+                </field>
+
                 <field id="transaction_type" translate="label" sortOrder="60" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Transaction type</label>
                     <source_model>Monogo\Alphabank\Model\Config\Source\TransactionType</source_model>
