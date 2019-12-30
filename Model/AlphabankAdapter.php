@@ -17,6 +17,10 @@ class AlphabankAdapter extends DataObject
 
     const CONFIG_NEW_ORDER_STATUS = 'order_status';
 
+    const CONFIG_INSTALLMENTS = 'installments';
+
+    const CONFIG_INSTALLMENTSOFFSET = 'installmentsoffset';
+
     const PARAM_MID = 'mid';
 
     const PARAM_ORDER_ID = 'orderid';
@@ -148,9 +152,9 @@ class AlphabankAdapter extends DataObject
         $form_data_array[25] = $fieldsArr['payMethod'];                                             //Opt
         $fieldsArr['trType'] = $this->getConfig()->getValue(self::CONFIG_TRANS_TYPE);
         $form_data_array[26] = $fieldsArr['trType'];                                                //Opt
-        $fieldsArr['extInstallmentoffset'] = '';
+        $fieldsArr['extInstallmentoffset'] = $this->getConfig()->getValue(self::CONFIG_INSTALLMENTSOFFSET);
         $form_data_array[27] = $fieldsArr['extInstallmentoffset'];                                  //Opt
-        $fieldsArr['extInstallmentperiod'] = '';
+        $fieldsArr['extInstallmentperiod'] = $this->getConfig()->getValue(self::CONFIG_INSTALLMENTS);
         $form_data_array[28] = $fieldsArr['extInstallmentperiod'];                                  //Opt
         $fieldsArr['extRecurringfrequency'] = '';
         $form_data_array[29] = $fieldsArr['extRecurringfrequency'];                                 //Opt

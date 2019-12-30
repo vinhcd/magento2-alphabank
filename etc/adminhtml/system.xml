@@ -38,17 +38,36 @@
                     <source_model>Monogo\Alphabank\Model\Config\Source\TransactionType</source_model>
                 </field>
 
-                <field id="order_status" translate="label" sortOrder="65" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="order_status" translate="label" sortOrder="70" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Order status</label>
                     <source_model>Monogo\Alphabank\Model\Config\Source\NewOrderStatus</source_model>
                 </field>
 
-                <field id="cctypes" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="installments" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Installments</label>
+                    <comment>90:3,180:6 (90 euro order - allow 3 installments etc.)</comment>
+                </field>
+
+                <field id="installmentsoffset" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Installments offset</label>
+                    <comment>number of months grace (backdating), before starting to charge fees</comment>
+                </field>
+
+                <field id="cctypes" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Credit Card Types</label>
                     <source_model>Monogo\Alphabank\Model\Config\Source\Cctype</source_model>
                 </field>
 
-                <field id="debug" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment From Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment From Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+
+                <field id="debug" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Debug</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
