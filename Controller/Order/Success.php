@@ -2,6 +2,7 @@
 
 namespace Monogo\Alphabank\Controller\Order;
 
+use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\CsrfAwareActionInterface;
@@ -13,6 +14,11 @@ use Monogo\Alphabank\Model\RespondHandler;
 
 class Success extends \Magento\Framework\App\Action\Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {
+    /**
+     * @var Session
+     */
+    private $checkoutSession;
+
     /**
      * @var RespondHandler
      */
@@ -26,14 +32,17 @@ class Success extends \Magento\Framework\App\Action\Action implements HttpPostAc
     /**
      * Success constructor.
      * @param Context $context
+     * @param Session $checkoutSession
      * @param RespondHandler $respondHandler
      * @param Logger $logger
      */
     public function __construct(
         Context $context,
+        Session $checkoutSession,
         RespondHandler $respondHandler,
         Logger $logger
     ) {
+        $this->checkoutSession = $checkoutSession;
         $this->respondHandler = $respondHandler;
         $this->logger = $logger;
 
@@ -63,6 +72,9 @@ class Success extends \Magento\Framework\App\Action\Action implements HttpPostAc
                 $this->messageManager->addErrorMessage($e->getMessage());
             }
             $this->messageManager->addErrorMessage(__('This payment method is currently set to Authorize only.'));
+            $this->checkoutSession->restoreQuote();
+
+            return $this->_redirect('checkout/cart');
         }
 
         return $this->_redirect('checkout/onepage/success');

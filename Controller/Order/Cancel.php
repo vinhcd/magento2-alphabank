@@ -2,6 +2,7 @@
 
 namespace Monogo\Alphabank\Controller\Order;
 
+use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\CsrfAwareActionInterface;
@@ -12,6 +13,11 @@ use Monogo\Alphabank\Model\RespondHandler;
 
 class Cancel extends \Magento\Framework\App\Action\Action implements HttpPostActionInterface, CsrfAwareActionInterface
 {
+    /**
+     * @var Session
+     */
+    private $checkoutSession;
+
     /**
      * @var RespondHandler
      */
@@ -25,11 +31,17 @@ class Cancel extends \Magento\Framework\App\Action\Action implements HttpPostAct
     /**
      * Cancel constructor.
      * @param Context $context
+     * @param Session $checkoutSession
      * @param RespondHandler $respondHandler
      * @param Logger $logger
      */
-    public function __construct(Context $context, RespondHandler $respondHandler, Logger $logger)
-    {
+    public function __construct(
+        Context $context,
+        Session $checkoutSession,
+        RespondHandler $respondHandler,
+        Logger $logger
+    ) {
+        $this->checkoutSession = $checkoutSession;
         $this->respondHandler = $respondHandler;
         $this->logger = $logger;
 
@@ -57,7 +69,9 @@ class Cancel extends \Magento\Framework\App\Action\Action implements HttpPostAct
         $this->messageManager->addErrorMessage($this->respondHandler->getErrorMessage());
         $this->messageManager->addErrorMessage(__('Your order has been canceled'));
 
-        return $this->_redirect('checkout');
+        $this->checkoutSession->restoreQuote();
+
+        return $this->_redirect('checkout/cart');
     }
 
     /**
