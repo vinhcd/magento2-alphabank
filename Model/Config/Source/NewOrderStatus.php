@@ -11,6 +11,7 @@ class NewOrderStatus implements \Magento\Framework\Data\OptionSourceInterface
     {
         return array(
             array('value' => 'pending_payment', 'label'=>__('Pending Payment')),
+            array('value' => 'processing', 'label'=>__('Processing')),
         );
     }
 }

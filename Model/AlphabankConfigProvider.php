@@ -27,7 +27,7 @@ class AlphabankConfigProvider implements ConfigProviderInterface
     /**
      * @var ConfigInterface
      */
-    private $config;
+    protected $config;
 
     /**
      * @param ConfigInterface $config
@@ -56,7 +56,7 @@ class AlphabankConfigProvider implements ConfigProviderInterface
     /**
      * @return string
      */
-    private function getApiUrl()
+    protected function getApiUrl()
     {
         if ($this->config->getValue(self::CONFIG_SANDBOX) == \Monogo\Alphabank\Model\Config\Source\Mode::LIVE) {
             return $this->config->getValue(self::CONFIG_API_URL);
@@ -67,7 +67,7 @@ class AlphabankConfigProvider implements ConfigProviderInterface
     /**
      * @return array
      */
-    private function getCardTypes()
+    protected function getCardTypes()
     {
         $result = [];
 

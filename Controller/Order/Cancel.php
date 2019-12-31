@@ -16,17 +16,17 @@ class Cancel extends \Magento\Framework\App\Action\Action implements HttpPostAct
     /**
      * @var Session
      */
-    private $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * @var RespondHandler
      */
-    private $respondHandler;
+    protected $respondHandler;
 
     /**
      * @var Logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * Cancel constructor.

@@ -56,12 +56,12 @@ class AlphabankAdapter extends DataObject
     /**
      * @var ConfigInterface
      */
-    private $config;
+    protected $config;
 
     /**
      * @var UrlInterface
      */
-    private $url;
+    protected $url;
 
     /**
      * @param ConfigInterface $config
@@ -193,7 +193,7 @@ class AlphabankAdapter extends DataObject
     /**
      * @return ConfigInterface
      */
-    private function getConfig()
+    protected function getConfig()
     {
         return $this->config;
     }
@@ -201,7 +201,7 @@ class AlphabankAdapter extends DataObject
     /**
      * @return string
      */
-    private function getConfirmUrl()
+    protected function getConfirmUrl()
     {
         return $this->url->getUrl('alphabank/order/success');
     }
@@ -209,7 +209,7 @@ class AlphabankAdapter extends DataObject
     /**
      * @return string
      */
-    private function getCancelUrl()
+    protected function getCancelUrl()
     {
         return $this->url->getUrl('alphabank/order/cancel');
     }

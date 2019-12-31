@@ -44,7 +44,7 @@
                 </field>
 
                 <field id="order_status" translate="label" sortOrder="70" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Order status</label>
+                    <label>New order status</label>
                     <source_model>Monogo\Alphabank\Model\Config\Source\NewOrderStatus</source_model>
                 </field>
 

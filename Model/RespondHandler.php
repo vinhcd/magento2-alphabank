@@ -14,27 +14,27 @@ class RespondHandler extends DataObject
     /**
      * @var ConfigInterface
      */
-    private $config;
+    protected $config;
 
     /**
      * @var OrderRepositoryInterface
      */
-    private $orderRepository;
+    protected $orderRepository;
 
     /**
      * @var OrderSender
      */
-    private $orderEmailSender;
+    protected $orderEmailSender;
 
     /**
      * @var string[]
      */
-    private $response;
+    protected $response;
 
     /**
      * @var string
      */
-    private $errorMessage;
+    protected $errorMessage;
 
     /**
      * RespondHandler constructor.
@@ -127,7 +127,7 @@ class RespondHandler extends DataObject
     /**
      * @param string $errorMessage
      */
-    private function setErrorMessage(string $errorMessage)
+    protected function setErrorMessage(string $errorMessage)
     {
         $this->errorMessage = $errorMessage;
     }
@@ -135,7 +135,7 @@ class RespondHandler extends DataObject
     /**
      * @return void
      */
-    private function handleErrorMessage()
+    protected function handleErrorMessage()
     {
         switch ($this->response[AlphabankAdapter::PARAM_STATUS]) {
             case AlphabankAdapter::STATUS_CANCELED:
@@ -152,7 +152,7 @@ class RespondHandler extends DataObject
     /**
      * @throws LocalizedException
      */
-    private function validateResponse()
+    protected function validateResponse()
     {
         if (!isset($this->response[AlphabankAdapter::PARAM_MID])
             || !isset($this->response[AlphabankAdapter::PARAM_ORDER_ID])
@@ -167,7 +167,7 @@ class RespondHandler extends DataObject
      * @param string $param
      * @return string
      */
-    private function getParamValue($param)
+    protected function getParamValue($param)
     {
         if (isset($this->response[$param])) return $this->response[$param];
 

@@ -17,17 +17,17 @@ class Success extends \Magento\Framework\App\Action\Action implements HttpPostAc
     /**
      * @var Session
      */
-    private $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * @var RespondHandler
      */
-    private $respondHandler;
+    protected $respondHandler;
 
     /**
      * @var Logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * Success constructor.

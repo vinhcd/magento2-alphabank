@@ -13,22 +13,22 @@ class Info extends \Magento\Framework\App\Action\Action
     /**
      * @var Session
      */
-    private $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * @var JsonFactory
      */
-    private $jsonFactory;
+    protected $jsonFactory;
 
     /**
      * @var AlphabankAdapter
      */
-    private $alphabankAdapter;
+    protected $alphabankAdapter;
 
     /**
      * @var Logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * @param Context $context
