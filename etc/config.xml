@@ -21,6 +21,7 @@
                 <can_void>0</can_void>
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>0</is_gateway>
+                <sort_order>100</sort_order>
             </alphabank>
         </payment>
     </default>
