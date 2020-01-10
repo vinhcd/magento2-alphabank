@@ -11,6 +11,10 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
 
+                <field id="title" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Title</label>
+                </field>
+
                 <field id="sandbox_mode" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Sandbox Mode</label>
                     <source_model>Monogo\Alphabank\Model\Config\Source\Mode</source_model>

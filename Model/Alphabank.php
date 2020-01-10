@@ -2,6 +2,8 @@
 
 namespace Monogo\Alphabank\Model;
 
+use Magento\Store\Model\ScopeInterface;
+
 class Alphabank extends \Magento\Payment\Model\Method\AbstractMethod
 {
     const CODE = 'alphabank';
@@ -14,7 +16,9 @@ class Alphabank extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @return string
      */
-    public function getTitle() {
-        return __("Alphabank");
+    public function getTitle()
+    {
+        return $this->_scopeConfig
+            ->getValue('payment/alphabank/title', ScopeInterface::SCOPE_STORE) ?: 'Alphabank';
     }
 }
